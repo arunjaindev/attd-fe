@@ -21,8 +21,6 @@ export default function SignIn() {
     <div className="min-h-screen">
       <Navbar />
 
-      {/* <img src={img} alt="home" className="ml-48 mt-24 w-1/4" /> */}
-
       <div className="bg-white border-2 w-1/4 h-1/2 rounded-lg absolute top-60 right-60 py-4 px-4">
         <div className="font-medium text-3xl py-2">Sign In to your account</div>
         <form id="form" onSubmit={submitHandler}>

@@ -39,7 +39,9 @@ export default function UserDash() {
       <div className="text-2xl font-bold px-6 mt-10">Fetch Your Attendance</div>
       <MonthYearSelector />
       <div className="mt-20 ml-4 font-bold text-3xl">
-        DISPLAY HEATMAP ON FETCH
+        <table>
+          <th></th>
+        </table>
       </div>
     </div>
   );
