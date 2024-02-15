@@ -1,10 +1,13 @@
-import "./App.css";
 import Navbar from "./SharedComponents/Navbar";
-import Sidebar from "./SharedComponents/Sidebar";
-import UserDash from "./SharedComponents/UserDash";
-import User from "./SharedComponents/UserDash";
+import SignIn from "./pages/home/SignIn";
+import AddUser from "./pages/principalPage/addUser/AddUser";
+import PrincipalPage from "./pages/principalPage/principalPage";
 import StudentPage from "./pages/studentPage/StudentPage";
 
 export default function App() {
-  return <StudentPage />;
+  return (
+    <>
+      <StudentPage />
+    </>
+  );
 }

@@ -1,13 +1,14 @@
 import Navbar from "../../SharedComponents/Navbar";
 import Sidebar from "../../SharedComponents/Sidebar";
-import UserDash from "../../SharedComponents/UserDash";
+import AddUser from "./addUser/AddUser";
+import FetchAttd from "./fetchAttd/fetchAttd";
 
-export default function StudentPage() {
+export default function PrincipalPage() {
   return (
     <>
       <Navbar />
       <Sidebar />
-      <UserDash />
+      <FetchAttd />
     </>
   );
 }
