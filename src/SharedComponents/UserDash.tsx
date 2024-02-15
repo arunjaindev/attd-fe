@@ -8,7 +8,7 @@ export default function UserDash() {
   function punchOut() {}
 
   return (
-    <div className="ml-60">
+    <div className="pl-60">
       <div className="bg-sky-50 h-full w-full py-4 px-4 flex items-center">
         <div className="w-1/10">
           <img
@@ -36,13 +36,8 @@ export default function UserDash() {
           </button>
         </div>
       </div>
-      <div className="text-2xl font-bold px-6 mt-10">Fetch Your Attendance</div>
+      <div className="text-2xl font-bold px-6 pt-10">Fetch Your Attendance</div>
       <MonthYearSelector />
-      <div className="mt-20 ml-4 font-bold text-3xl">
-        <table>
-          <th></th>
-        </table>
-      </div>
     </div>
   );
 }

@@ -4,10 +4,10 @@ import UserDash from "../../SharedComponents/UserDash";
 
 export default function StudentPage() {
   return (
-    <div>
+    <>
       <Navbar />
       <Sidebar />
       <UserDash />
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { postReq } from "../../services/api";
 import Navbar from "../../SharedComponents/Navbar";
+import img from "/home/arun/attd-fe/src/assets/bg.png";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -12,19 +13,17 @@ export default function SignIn() {
       username: email,
       password: password,
     };
-    const response = await postReq("/login", info);
-
-    console.log(response);
+    await postReq("/login", info);
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="w-100vw h-100vh">
       <Navbar />
-
+      <img src={img} alt="home-bg" className="pt-20 pl-40 w-3/5" />
       <div className="bg-white border-2 w-1/4 h-1/2 rounded-lg absolute top-60 right-60 py-4 px-4">
         <div className="font-medium text-3xl py-2">Sign In to your account</div>
         <form id="form" onSubmit={submitHandler}>
-          <div className="py-2 mt-4">
+          <div className="pt-4 pb-2">
             <label htmlFor="email" className="text-lg font-medium">
               Your Email
             </label>
@@ -41,7 +40,7 @@ export default function SignIn() {
             />
           </div>
 
-          <div className="py-2 mt-4">
+          <div className="pb-2 pt-4">
             <label htmlFor="password" className="text-lg font-medium">
               Password
             </label>
@@ -58,12 +57,14 @@ export default function SignIn() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="mt-6 border rounded-lg text-lg px-8 py-1 bg-indigo-600 hover:bg-indigo-700 text-white"
-          >
-            Sign In
-          </button>
+          <div className="pt-6">
+            <button
+              type="submit"
+              className="border rounded-lg text-lg px-8 py-1 bg-indigo-600 hover:bg-indigo-700 text-white"
+            >
+              Sign In
+            </button>
+          </div>
         </form>
       </div>
     </div>
