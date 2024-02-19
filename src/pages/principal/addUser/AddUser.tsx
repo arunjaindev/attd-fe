@@ -3,19 +3,29 @@ import Select from "react-select";
 import { classOptions, roleOptions } from "./constants";
 import { postReq } from "../../../services/api";
 
-export default function AddUser() {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [userClass, setUserClass] = useState(0);
+interface OptionTypeStr {
+  value: string;
+  label: string;
+}
 
-  const roleChangeHandler = (event) => {
-    setRole(event.value);
+interface OptionTypeNum {
+  value: number;
+  label: number;
+}
+
+export default function AddUser() {
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [userClass, setUserClass] = useState<number>(0);
+
+  const roleChangeHandler = (selectedOption: OptionTypeStr) => {
+    if (selectedOption) setRole(selectedOption.value);
   };
 
-  const classChangeHandler = (event) => {
-    setUserClass(event.value);
+  const classChangeHandler = (selectedOption: OptionTypeNum) => {
+    setUserClass(selectedOption.value);
   };
 
   const addUserHandler = async () => {
@@ -35,8 +45,8 @@ export default function AddUser() {
 
   return (
     <div className="pl-60">
-      <div className="font-bold text-4xl pt-8 pl-8 ">Add User</div>
-      <form id="form" className="ml-8 pt-4 w-90" onSubmit={addUserHandler}>
+      <div className="font-bold text-4xl pt-20 pl-8 ">Add User</div>
+      <form id="form" className="ml-8 pt-6 w-90" onSubmit={addUserHandler}>
         <div>
           <label htmlFor="firstname" className="font-medium text-xl pr-4">
             First Name:

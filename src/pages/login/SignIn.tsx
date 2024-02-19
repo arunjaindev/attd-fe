@@ -1,19 +1,28 @@
 import { useState } from "react";
-import { postReq } from "../../services/api";
 import Navbar from "../../SharedComponents/Navbar";
 import img from "/home/arun/attd-fe/src/assets/bg.png";
+import { useAuthContext } from "../../contexts/AuthState";
+import { Navigate } from "react-router-dom";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { user, login } = useAuthContext();
+  const [role, setRole] = useState<string>("");
 
-  async function submitHandler(e) {
+  if (role == "principal" || role == "student" || role == "teacher") {
+    return <Navigate to="dashboard" />;
+  }
+
+  async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
-    const info = {
+    const creds = {
       username: email,
       password: password,
     };
-    await postReq("/login", info);
+
+    login(creds);
+    setRole(user?.role);
   }
 
   return (

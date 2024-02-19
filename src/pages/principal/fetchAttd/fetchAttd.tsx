@@ -1,26 +1,31 @@
 import Select from "react-select";
-import { useState } from "react";
+import React, { useState } from "react";
 import { getReq } from "../../../services/api";
 import { months } from "../../../SharedComponents/constants";
 import { years } from "../../../SharedComponents/constants";
 
-export default function FetchAttd() {
-  const [userid, setUserId] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
-  const [attd, setAttd] = useState([]);
-  const [show, setShow] = useState(false);
+interface OptionType {
+  value: number;
+  label: number;
+}
 
-  const handleIdChange = (e) => {
+export default function FetchAttd() {
+  const [userid, setUserId] = useState<number>();
+  const [month, setMonth] = useState<number>();
+  const [year, setYear] = useState<number>();
+  const [attd, setAttd] = useState<string[]>([]);
+  const [show, setShow] = useState<boolean>(false);
+
+  const handleIdChange = (e: React.FormEvent<HTMLInputElement>) => {
     setUserId(e.target.value);
   };
 
-  const handleMonthChange = (e) => {
-    setMonth(e.value);
+  const handleMonthChange = (selectedOption: OptionType) => {
+    setMonth(selectedOption.value);
   };
 
-  const handleYearChange = (e) => {
-    setYear(e.value);
+  const handleYearChange = (selectedOption: OptionType) => {
+    setYear(selectedOption.value);
   };
 
   const fetchAttendance = async () => {
@@ -32,28 +37,41 @@ export default function FetchAttd() {
 
   return (
     <div className="pl-60">
-      <div className="text-4xl font-bold py-8 px-6">Fetch Attendance</div>
-      <label htmlFor="id" className="font-medium text-lg px-6">
-        User ID:
-      </label>
-      <input
-        className="border px-2 py-1 rounded-full w-40"
-        type="text"
-        onChange={handleIdChange}
-        required
-      />
+      <div className="text-4xl font-bold pt-20 px-6">Fetch Attendance</div>
+      <div className="pt-6">
+        <label htmlFor="userid" className="font-medium text-lg px-6 pt-8">
+          User ID:
+        </label>
+        <input
+          className="border px-2 py-1 rounded-full w-40"
+          type="text"
+          id="userid"
+          onChange={handleIdChange}
+          required
+        />
+      </div>
       <div className="flex items-centre pt-4">
         <div className="px-6 w-40">
           <label htmlFor="month" className="font-medium text-lg">
             Month:
           </label>
-          <Select onChange={handleMonthChange} options={months} required />
+          <Select
+            onChange={handleMonthChange}
+            options={months}
+            id="month"
+            required
+          />
         </div>
         <div className="px-6 w-60">
-          <label htmlFor="month" className="font-medium text-lg">
+          <label htmlFor="year" className="font-medium text-lg">
             Year:
           </label>
-          <Select onChange={handleYearChange} options={years} required />
+          <Select
+            onChange={handleYearChange}
+            options={years}
+            id="year"
+            required
+          />
         </div>
         <div className="px-6 w-80 pt-4">
           <button
@@ -65,18 +83,18 @@ export default function FetchAttd() {
         </div>
       </div>
       <div className="pt-8 pl-6">
-        {show ? (
+        {show && (
           <table className="">
             <thead className="text-xl font-medium">Present On:</thead>
             <tbody className="text-lg">
-              {attd.map((dt) => (
+              {attd.map((dt: string) => (
                 <tr key={dt}>
                   <td>{dt.slice(0, 10)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-        ) : null}
+        )}
       </div>
     </div>
   );
