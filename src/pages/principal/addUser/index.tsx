@@ -1,6 +1,6 @@
-import Navbar from "../../../SharedComponents/Navbar";
-import Sidebar from "../../../SharedComponents/Sidebar";
-import AddUser from "./AddUser";
+import Navbar from "../../../SharedComponents/Navbar"
+import Sidebar from "../../../SharedComponents/Sidebar"
+import AddUser from "./AddUser"
 
 export default function AddUserPage() {
   return (
@@ -9,5 +9,5 @@ export default function AddUserPage() {
       <Sidebar />
       <AddUser />
     </>
-  );
+  )
 }

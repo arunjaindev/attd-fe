@@ -1,47 +1,35 @@
-import { useState } from "react";
-import Select from "react-select";
-import { classOptions, roleOptions } from "./constants";
-import { postReq } from "../../../services/api";
-
-interface OptionTypeStr {
-  value: string;
-  label: string;
-}
-
-interface OptionTypeNum {
-  value: number;
-  label: number;
-}
+import { useState } from "react"
+import Select from "react-select"
+import { classOptions, roleOptions } from "./constants"
+import { postReq } from "../../../services/api"
+import { OptionType } from "../../../SharedComponents/constants"
+import { OptionTypeStr } from "./constants"
 
 export default function AddUser() {
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [role, setRole] = useState<string>("");
-  const [userClass, setUserClass] = useState<number>(0);
+  const [firstname, setFirstname] = useState<string>("")
+  const [lastname, setLastname] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [role, setRole] = useState<string>("")
+  const [userClass, setUserClass] = useState<number>()
 
   const roleChangeHandler = (selectedOption: OptionTypeStr) => {
-    if (selectedOption) setRole(selectedOption.value);
-  };
+    if (selectedOption) setRole(selectedOption.value)
+  }
 
-  const classChangeHandler = (selectedOption: OptionTypeNum) => {
-    setUserClass(selectedOption.value);
-  };
+  const classChangeHandler = (selectedOption: OptionType) => {
+    setUserClass(selectedOption.value)
+  }
 
   const addUserHandler = async () => {
-    if (role === "teacher") {
-      setUserClass(0);
-    }
-
     const userInfo = {
       firstname: firstname,
       lastname: lastname,
       email: email,
       role: role,
-      class: userClass,
-    };
-    await postReq("/addUser", userInfo);
-  };
+      class: role == "teacher" ? 0 : userClass,
+    }
+    await postReq("/addUser", userInfo)
+  }
 
   return (
     <div className="pl-60">
@@ -125,5 +113,5 @@ export default function AddUser() {
         </button>
       </form>
     </div>
-  );
+  )
 }

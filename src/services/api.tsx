@@ -1,12 +1,12 @@
-const BASE_URL = "http://localhost:8000/api";
+const BASE_URL = "http://localhost:8000/api"
 
 export async function getReq(endpoint: string) {
   const response = await fetch(BASE_URL + endpoint, {
     method: "GET",
     credentials: "include",
-  });
-  const responseBody = await response.json();
-  return responseBody;
+  })
+  const responseBody = await response.json()
+  return responseBody
 }
 
 export async function postReq(endpoint: string, data) {
@@ -14,9 +14,9 @@ export async function postReq(endpoint: string, data) {
     method: "POST",
     body: JSON.stringify(data),
     credentials: "include",
-  });
-  const responseBody = await response.json();
-  return responseBody;
+  })
+  const responseBody = await response.json()
+  return responseBody
 }
 
 export async function putReq(endpoint: string, data) {
@@ -26,15 +26,15 @@ export async function putReq(endpoint: string, data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
-  const responseBody = await response.json();
-  return responseBody;
+  })
+  const responseBody = await response.json()
+  return responseBody
 }
 
 export async function deleteReq(endpoint: string) {
   const response = await fetch(BASE_URL + endpoint, {
     method: "DELETE",
-  });
-  const responseBody = await response.json();
-  return responseBody;
+  })
+  const responseBody = await response.json()
+  return responseBody
 }

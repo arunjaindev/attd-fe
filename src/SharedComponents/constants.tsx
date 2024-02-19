@@ -1,5 +1,20 @@
+export const avatarURL = "https://api.multiavatar.com/abcdef.svg"
 
-export const avatarURL =  "https://api.multiavatar.com/abcdef.svg";
+export const routes = {
+  dashboard: "dashboard"
+}
+
+export const navRoutes = [
+  { path: "/dashboard", label: "Dashboard"},
+  { path: "/classAttendance", label: "Class Attendance", role: "teacher" },
+  { path: "/userAttendance", label: "User Attendance", role: "principal" },
+  { path: "/addUser", label: "Add User", role: "principal" },
+]
+
+export interface OptionType {
+  value: number
+  label: number
+}
 
 export const months = [
   { value: 1, label: 1 },
@@ -14,11 +29,11 @@ export const months = [
   { value: 10, label: 10 },
   { value: 11, label: 11 },
   { value: 12, label: 12 },
-];
+]
 
 export const years = [
   { value: 2021, label: 2021 },
   { value: 2022, label: 2022 },
   { value: 2023, label: 2023 },
   { value: 2024, label: 2024 },
-];
+]

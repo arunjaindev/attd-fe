@@ -1,33 +1,27 @@
-import { NavLink, Navigate } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthState";
-import { useState } from "react";
+import { NavLink, Navigate } from "react-router-dom"
+import { useAuthContext } from "../contexts/AuthState"
+import { useState } from "react"
+import { navRoutes } from "./constants"
 
 export default function Sidebar() {
-  const [out, setOut] = useState(false);
-  const { user, logout } = useAuthContext();
-  const role = user?.role;
+  const [isLoggedOut, setIsLoggedOut] = useState(false)
+  const { user, logout } = useAuthContext()
+  const role = user?.role
 
   const handleLogout = () => {
-    logout();
-    setOut(true);
-  };
-
-  if (out) {
-    return <Navigate to="/" />;
+    logout()
+    setIsLoggedOut(true)
   }
 
-  const routes = [
-    { path: "/dashboard", label: "Dashboard" },
-    { path: "/classAttendance", label: "Class Attendance", role: "teacher" },
-    { path: "/userAttendance", label: "User Attendance", role: "principal" },
-    { path: "/addUser", label: "Add User", role: "principal" },
-  ];
+  if (isLoggedOut) {
+    return <Navigate to="/" />
+  }
 
   return (
     <div className="w-60 h-lvh fixed pt-20 bg-slate-200">
-      {routes.map(
+      {navRoutes.map(
         ({ path, label, role: allowedRole }) =>
-          (allowedRole === undefined || role === allowedRole) && (
+          (!allowedRole || role === allowedRole) && (
             <NavLink
               key={path}
               to={path}
@@ -39,10 +33,11 @@ export default function Sidebar() {
       )}
       <button
         className="font-semibold text-lg text-left block px-4 py-3 w-full hover:bg-slate-100"
+        type="button"
         onClick={handleLogout}
       >
         Logout
       </button>
     </div>
-  );
+  )
 }

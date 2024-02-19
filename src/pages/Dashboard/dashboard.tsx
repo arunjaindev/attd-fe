@@ -1,13 +1,15 @@
-import Navbar from "../../SharedComponents/Navbar";
-import Sidebar from "../../SharedComponents/Sidebar";
-import UserDash from "../../SharedComponents/UserDash";
+import Navbar from "../../SharedComponents/Navbar"
+import Sidebar from "../../SharedComponents/Sidebar"
+import UserDashboard from "../../SharedComponents/UserDashboard"
 
-export default function Dashboard() {
+const Dashboard = () => {
   return (
     <>
       <Navbar />
       <Sidebar />
-      <UserDash />
+      <UserDashboard />
     </>
-  );
+  )
 }
+
+export default Dashboard

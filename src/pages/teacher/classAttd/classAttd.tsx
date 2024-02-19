@@ -1,43 +1,41 @@
-import Select from "react-select";
-import { classOptions } from "../../principal/addUser/constants";
-import { useState } from "react";
-import { months, years } from "../../../SharedComponents/constants";
-import { getReq } from "../../../services/api";
-
-interface OptionType {
-  value: number;
-  label: number;
-}
+import Select from "react-select"
+import { classOptions } from "../../principal/addUser/constants"
+import { useState } from "react"
+import { months, years } from "../../../SharedComponents/constants"
+import { getReq } from "../../../services/api"
+import { OptionType } from "../../../SharedComponents/constants"
 
 export default function ClassAttendance() {
-  const [userClass, setUserClass] = useState<number>();
-  const [month, setMonth] = useState<number>();
-  const [year, setYear] = useState<number>();
-  const [attd, setAttd] = useState([]);
-  const [show, setShow] = useState<boolean>(false);
+  const [userClass, setUserClass] = useState<number>()
+  const [month, setMonth] = useState<number>()
+  const [year, setYear] = useState<number>()
+  const [attd, setAttd] = useState<string[]>([])
+  const [show, setShow] = useState<boolean>(false)
 
   const classChangeHandler = (selectedOption: OptionType) => {
-    setUserClass(selectedOption.value);
-  };
+    setUserClass(selectedOption.value)
+  }
 
   const monthChangeHandler = (selectedOption: OptionType) => {
-    setMonth(selectedOption.value);
-  };
+    setMonth(selectedOption.value)
+  }
 
   const yearChangeHandler = (selectedOption: OptionType) => {
-    setYear(selectedOption.value);
-  };
+    setYear(selectedOption.value)
+  }
 
   const fetchClassAttendance = async () => {
-    const endpoint = "/classAttendance/" + userClass + "/" + month + "/" + year;
-    const response = await getReq(endpoint);
-    setAttd(response);
-    setShow(true);
-  };
+    const endpoint = "/classAttendance/" + userClass + "/" + month + "/" + year
+    const response = await getReq(endpoint)
+    setAttd(response)
+    setShow(true)
+  }
 
   return (
     <div className="pl-60">
-      <div className="text-4xl font-bold pl-6 pt-24">Fetch Class Attendance</div>
+      <div className="text-4xl font-bold pl-6 pt-24">
+        Fetch Class Attendance
+      </div>
       <div className="pt-6 pl-6">
         <label htmlFor="class" className="font-medium text-xl">
           Select Class:
@@ -103,5 +101,5 @@ export default function ClassAttendance() {
         )}
       </div>
     </div>
-  );
+  )
 }

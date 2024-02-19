@@ -1,28 +1,34 @@
-import { useState } from "react";
-import Navbar from "../../SharedComponents/Navbar";
-import img from "/home/arun/attd-fe/src/assets/bg.png";
-import { useAuthContext } from "../../contexts/AuthState";
-import { Navigate } from "react-router-dom";
+import { useState } from "react"
+import Navbar from "../../SharedComponents/Navbar"
+import img from "/home/arun/attd-fe/src/assets/bg.png"
+import { useAuthContext } from "../../contexts/AuthState"
+import { Navigate } from "react-router-dom"
+import { userRoles } from "./constants"
+import { routes } from "../../SharedComponents/constants"
 
 export default function SignIn() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { user, login } = useAuthContext();
-  const [role, setRole] = useState<string>("");
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const { user, login } = useAuthContext()
+  const [role, setRole] = useState<string>("")
 
-  if (role == "principal" || role == "student" || role == "teacher") {
-    return <Navigate to="dashboard" />;
+  if (
+    role === userRoles.stu ||
+    role === userRoles.tut ||
+    role === userRoles.principal
+  ) {
+    return <Navigate to={routes.dashboard} />
   }
 
   async function submitHandler(e: React.FormEvent) {
-    e.preventDefault();
+    e.preventDefault()
     const creds = {
       username: email,
       password: password,
-    };
+    }
 
-    login(creds);
-    setRole(user?.role);
+    login(creds)
+    setRole(user?.role)
   }
 
   return (
@@ -77,5 +83,5 @@ export default function SignIn() {
         </form>
       </div>
     </div>
-  );
+  )
 }

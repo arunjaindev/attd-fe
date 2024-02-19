@@ -1,6 +1,6 @@
-import Navbar from "../../../SharedComponents/Navbar";
-import Sidebar from "../../../SharedComponents/Sidebar";
-import ClassAttendance from "./classAttd";
+import Navbar from "../../../SharedComponents/Navbar"
+import Sidebar from "../../../SharedComponents/Sidebar"
+import ClassAttendance from "./classAttd"
 
 export default function ClassAttdPage() {
   return (
@@ -9,5 +9,5 @@ export default function ClassAttdPage() {
       <Sidebar />
       <ClassAttendance />
     </>
-  );
+  )
 }

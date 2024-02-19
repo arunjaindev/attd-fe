@@ -1,39 +1,35 @@
-import Select from "react-select";
-import React, { useState } from "react";
-import { getReq } from "../../../services/api";
-import { months } from "../../../SharedComponents/constants";
-import { years } from "../../../SharedComponents/constants";
-
-interface OptionType {
-  value: number;
-  label: number;
-}
+import Select from "react-select"
+import React, { useState } from "react"
+import { getReq } from "../../../services/api"
+import { months } from "../../../SharedComponents/constants"
+import { years } from "../../../SharedComponents/constants"
+import { OptionType } from "../../../SharedComponents/constants"
 
 export default function FetchAttd() {
-  const [userid, setUserId] = useState<number>();
-  const [month, setMonth] = useState<number>();
-  const [year, setYear] = useState<number>();
-  const [attd, setAttd] = useState<string[]>([]);
-  const [show, setShow] = useState<boolean>(false);
+  const [userid, setUserId] = useState<number>()
+  const [month, setMonth] = useState<number>()
+  const [year, setYear] = useState<number>()
+  const [attd, setAttd] = useState<string[]>([])
+  const [show, setShow] = useState<boolean>(false)
 
   const handleIdChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setUserId(e.target.value);
-  };
+    setUserId(e.target.value)
+  }
 
   const handleMonthChange = (selectedOption: OptionType) => {
-    setMonth(selectedOption.value);
-  };
+    setMonth(selectedOption.value)
+  }
 
   const handleYearChange = (selectedOption: OptionType) => {
-    setYear(selectedOption.value);
-  };
+    setYear(selectedOption.value)
+  }
 
   const fetchAttendance = async () => {
-    const endpoint = "/userAttendance/" + userid + "/" + month + "/" + year;
-    const response = await getReq(endpoint);
-    setAttd(response);
-    setShow(true);
-  };
+    const endpoint = "/userAttendance/" + userid + "/" + month + "/" + year
+    const response = await getReq(endpoint)
+    setAttd(response)
+    setShow(true)
+  }
 
   return (
     <div className="pl-60">
@@ -97,5 +93,5 @@ export default function FetchAttd() {
         )}
       </div>
     </div>
-  );
+  )
 }

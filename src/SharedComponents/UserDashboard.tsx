@@ -1,39 +1,47 @@
-import Select from "react-select";
-import { useState } from "react";
-import { getReq } from "../services/api";
-import { avatarURL, months, years } from "./constants";
-import { useAuthContext } from "../contexts/AuthState";
+import Select from "react-select"
+import { useState } from "react"
+import { getReq, postReq } from "../services/api"
+import { avatarURL, months, years } from "./constants"
+import { useAuthContext } from "../contexts/AuthState"
+import { OptionType } from "./constants"
 
-interface OptionType {
-  value: number;
-  label: number;
-}
-
-export default function UserDash() {
-  const [month, setMonth] = useState<number>();
-  const [year, setYear] = useState<number>();
-  const [attd, setAttd] = useState([]);
-  const [show, setShow] = useState<boolean>(false);
-  const { user } = useAuthContext();
+export default function UserDashboard() {
+  const [month, setMonth] = useState<number>()
+  const [year, setYear] = useState<number>()
+  const [attd, setAttd] = useState<string[]>([])
+  const [show, setShow] = useState<boolean>(false)
+  const { user } = useAuthContext()
 
   const handleMonthChange = (selectedOption: OptionType) => {
-    setMonth(selectedOption.value);
-  };
+    setMonth(selectedOption.value)
+  }
 
   const handleYearChange = (selectedOption: OptionType) => {
-    setYear(selectedOption.value);
-  };
+    setYear(selectedOption.value)
+  }
 
   const fetchAttendance = async () => {
-    const id = user?.ID;
-    const endpoint = "/userAttendance/" + id + "/" + month + "/" + year;
-    const response = await getReq(endpoint);
-    setAttd(response);
-    setShow(true);
-  };
+    const id = user?.ID
+    const endpoint = "/userAttendance/" + id + "/" + month + "/" + year
+    const response = await getReq(endpoint)
+    setAttd(response)
+    setShow(true)
+  }
 
-  async function punchIn() {}
-  function punchOut() {}
+  async function punchIn() {
+    const info = {
+      userid: user?.ID,
+    }
+    const response = await postReq("/punchIn", info)
+    console.log(response)
+  }
+  async function punchOut() {
+    const info = {
+      userid: user?.ID,
+    }
+    const response = await postReq("/punchOut", info)
+    console.log(response)
+  }
 
   return (
     <div className="pl-60 pt-16">
@@ -69,15 +77,17 @@ export default function UserDash() {
       <div className="text-2xl font-bold px-6 pt-10">Fetch Your Attendance</div>
       <div className="flex items-centre mt-4">
         <div className="px-6 w-40">
+          <label>Month:</label>
           <Select onChange={handleMonthChange} options={months} required />
         </div>
         <div className="px-6 w-60">
-          <label></label>
+          <label>Year:</label>
           <Select onChange={handleYearChange} options={years} required />
         </div>
-        <div className="px-6 w-80">
+        <div className="px-6 w-80 pt-5">
           <button
             onClick={fetchAttendance}
+            type="button"
             className="border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
           >
             Fetch
@@ -99,5 +109,5 @@ export default function UserDash() {
         )}
       </div>
     </div>
-  );
+  )
 }

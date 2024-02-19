@@ -1,6 +1,6 @@
-import Navbar from "../../../SharedComponents/Navbar";
-import Sidebar from "../../../SharedComponents/Sidebar";
-import FetchAttd from "./fetchAttd";
+import Navbar from "../../../SharedComponents/Navbar"
+import Sidebar from "../../../SharedComponents/Sidebar"
+import FetchAttd from "./fetchAttd"
 
 export default function FetchAttdPage() {
   return (
@@ -9,5 +9,5 @@ export default function FetchAttdPage() {
       <Sidebar />
       <FetchAttd />
     </>
-  );
+  )
 }
