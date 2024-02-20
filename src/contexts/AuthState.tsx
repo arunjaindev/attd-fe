@@ -1,5 +1,6 @@
 import React, { useState, useMemo, createContext, useContext } from "react"
-import { CredType, User, AuthContextType, URL } from "./constants"
+import { CredType, User, AuthContextType} from "./types"
+import { URL } from "./constants"
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 

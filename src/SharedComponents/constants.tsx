@@ -1,10 +1,10 @@
-export const avatarURL = "https://api.multiavatar.com/abcdef.svg"
+export const avatarURL = "https://api.multiavatar.com/"
 
 export const routes = {
   dashboard: "dashboard"
 }
 
-export const navRoutes = [
+export const NAV_ROUTES = [
   { path: "/dashboard", label: "Dashboard"},
   { path: "/classAttendance", label: "Class Attendance", role: "teacher" },
   { path: "/userAttendance", label: "User Attendance", role: "principal" },
@@ -14,6 +14,16 @@ export const navRoutes = [
 export interface OptionType {
   value: number
   label: number
+}
+
+export enum userRoles {
+  student = "student",
+  teacher = "teacher",
+  principal = "principal",
+}
+
+export enum userClasses {
+  zero = 0,
 }
 
 export const months = [

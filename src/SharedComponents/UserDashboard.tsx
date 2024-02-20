@@ -4,43 +4,53 @@ import { getReq, postReq } from "../services/api"
 import { avatarURL, months, years } from "./constants"
 import { useAuthContext } from "../contexts/AuthState"
 import { OptionType } from "./constants"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useLoaderContext } from "../contexts/LoaderState"
 
 export default function UserDashboard() {
   const [month, setMonth] = useState<number>()
   const [year, setYear] = useState<number>()
   const [attd, setAttd] = useState<string[]>([])
-  const [show, setShow] = useState<boolean>(false)
+  const [showTable, setShowTable] = useState<boolean>(false)
   const { user } = useAuthContext()
+  const {isLoading, showLoader, hideLoader } = useLoaderContext()
 
-  const handleMonthChange = (selectedOption: OptionType) => {
-    setMonth(selectedOption.value)
+  const handleMonthChange = (selectedOption: OptionType | null) => {
+    setMonth(selectedOption?.value)
   }
 
-  const handleYearChange = (selectedOption: OptionType) => {
-    setYear(selectedOption.value)
+  const handleYearChange = (selectedOption: OptionType | null) => {
+    setYear(selectedOption?.value)
   }
 
   const fetchAttendance = async () => {
+    showLoader()
     const id = user?.ID
     const endpoint = "/userAttendance/" + id + "/" + month + "/" + year
     const response = await getReq(endpoint)
     setAttd(response)
-    setShow(true)
+    setShowTable(true)
+    hideLoader()
   }
 
   async function punchIn() {
+    showLoader()
     const info = {
       userid: user?.ID,
     }
-    const response = await postReq("/punchIn", info)
-    console.log(response)
+    const res = await postReq("/punchIn", info)
+    toast.info(res)
+    hideLoader()
   }
   async function punchOut() {
+    showLoader()
     const info = {
       userid: user?.ID,
     }
-    const response = await postReq("/punchOut", info)
-    console.log(response)
+    const res =await postReq("/punchOut", info)
+    toast.info(res)
+    hideLoader()
   }
 
   return (
@@ -49,7 +59,7 @@ export default function UserDashboard() {
         <div className="w-1/10">
           <img
             className="inline w-24 h-24 mr-4"
-            src={avatarURL}
+            src={avatarURL + user?.firstName + ".svg"}
             alt="User Avatar"
           />
         </div>
@@ -62,13 +72,17 @@ export default function UserDashboard() {
         <div className="w-4/10 pl-48">
           <button
             className="border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
+            type="button"
             onClick={punchIn}
+            disabled={isLoading}
           >
             Punch In
           </button>
           <button
             className="ml-2 border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
+            type="button"
             onClick={punchOut}
+            disabled={isLoading}
           >
             Punch Out
           </button>
@@ -89,16 +103,18 @@ export default function UserDashboard() {
             onClick={fetchAttendance}
             type="button"
             className="border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
+            disabled={isLoading}
           >
             Fetch
           </button>
         </div>
       </div>
       <div className="pt-8 pl-6">
-        {show && (
+        {showTable && (
+          <div className="text-2xl font-bold">
+            Present On:
           <table className="">
-            <tbody className="text-lg">
-              <tr className="text-xl font-medium">Dates Present:</tr>
+            <tbody className="text-lg font-medium">
               {attd.map((dt: string) => (
                 <tr key={dt}>
                   <td>{dt.slice(0, 10)}</td>
@@ -106,8 +122,10 @@ export default function UserDashboard() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
+      <ToastContainer/>
     </div>
   )
 }

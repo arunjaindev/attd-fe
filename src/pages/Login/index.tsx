@@ -1,3 +1,1 @@
-import SignIn from "./SignIn"
-
-export {SignIn as LoginPage}
+export {default as SignIn} from './SignIn'

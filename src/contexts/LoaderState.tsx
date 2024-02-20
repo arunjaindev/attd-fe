@@ -1,9 +1,6 @@
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react"
 import LoaderContext from "./LoaderContext"
-
-type LoaderProviderProps = {
-  children : React.ReactNode
-}
+import { LoaderProviderProps } from "./types"
 
 export const LoaderProvider = ({children} : LoaderProviderProps) => {
   const [isLoading, setIsLoading] = useState(false)

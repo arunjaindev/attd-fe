@@ -1,7 +1,1 @@
-import Dashboard from "./dashboard"
-
-const DashboardPage = () => {
-  return <Dashboard />
-}
-
-export default DashboardPage
+export { default as Dashboard } from "./dashboard"
