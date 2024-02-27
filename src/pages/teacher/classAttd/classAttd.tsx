@@ -75,6 +75,7 @@ export default function ClassAttendance() {
       <div className="px-5 w-80 pt-6">
         <button
           onClick={fetchClassAttendance}
+          type="button"
           className="border font-medium text-lg text-white bg-indigo-500 px-6 py-2 rounded-full"
         >
           Fetch

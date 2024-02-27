@@ -3,7 +3,7 @@ import Navbar from "../../SharedComponents/Navbar"
 import img from "/home/arun/attd-fe/src/assets/bg.png"
 import { useAuthContext } from "../../contexts/AuthState"
 import { Navigate } from "react-router-dom"
-import { userRoles } from "./constants"
+import { userRoles } from "../../SharedComponents/constants"
 import { routes } from "../../SharedComponents/constants"
 
 export default function SignIn() {
@@ -13,8 +13,8 @@ export default function SignIn() {
   const [role, setRole] = useState<string>("")
 
   if (
-    role === userRoles.stu ||
-    role === userRoles.tut ||
+    role === userRoles.student ||
+    role === userRoles.teacher ||
     role === userRoles.principal
   ) {
     return <Navigate to={routes.dashboard} />

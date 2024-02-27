@@ -71,6 +71,7 @@ export default function FetchAttd() {
         </div>
         <div className="px-6 w-80 pt-4">
           <button
+            type="button"
             onClick={fetchAttendance}
             className="border font-medium text-lg text-white bg-indigo-500 px-8 py-2 rounded-full"
           >
@@ -80,9 +81,10 @@ export default function FetchAttd() {
       </div>
       <div className="pt-8 pl-6">
         {show && (
+          <div className="text-2xl font-bold">
+            Present On:
           <table className="">
-            <thead className="text-xl font-medium">Present On:</thead>
-            <tbody className="text-lg">
+            <tbody className="text-lg font-medium">
               {attd.map((dt: string) => (
                 <tr key={dt}>
                   <td>{dt.slice(0, 10)}</td>
@@ -90,6 +92,7 @@ export default function FetchAttd() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

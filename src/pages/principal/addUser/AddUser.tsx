@@ -2,7 +2,7 @@ import { useState } from "react"
 import Select from "react-select"
 import { classOptions, roleOptions } from "./constants"
 import { postReq } from "../../../services/api"
-import { OptionType } from "../../../SharedComponents/constants"
+import { OptionType, userClasses, userRoles } from "../../../SharedComponents/constants"
 import { OptionTypeStr } from "./constants"
 
 export default function AddUser() {
@@ -12,12 +12,12 @@ export default function AddUser() {
   const [role, setRole] = useState<string>("")
   const [userClass, setUserClass] = useState<number>()
 
-  const roleChangeHandler = (selectedOption: OptionTypeStr) => {
+  const roleChangeHandler = (selectedOption: OptionTypeStr | null) => {
     if (selectedOption) setRole(selectedOption.value)
   }
 
-  const classChangeHandler = (selectedOption: OptionType) => {
-    setUserClass(selectedOption.value)
+  const classChangeHandler = (selectedOption: OptionType | null) => {
+    setUserClass(selectedOption?.value)
   }
 
   const addUserHandler = async () => {
@@ -26,7 +26,7 @@ export default function AddUser() {
       lastname: lastname,
       email: email,
       role: role,
-      class: role == "teacher" ? 0 : userClass,
+      class: role == userRoles.teacher ? userClasses.zero : userClass,
     }
     await postReq("/addUser", userInfo)
   }
