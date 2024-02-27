@@ -6,15 +6,14 @@ import { useAuthContext } from "../contexts/AuthState"
 import { OptionType } from "./constants"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLoaderContext } from "../contexts/LoaderState"
 
 export default function UserDashboard() {
   const [month, setMonth] = useState<number>()
   const [year, setYear] = useState<number>()
   const [attd, setAttd] = useState<string[]>([])
   const [showTable, setShowTable] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user } = useAuthContext()
-  const {isLoading, showLoader, hideLoader } = useLoaderContext()
 
   const handleMonthChange = (selectedOption: OptionType | null) => {
     setMonth(selectedOption?.value)
@@ -25,36 +24,43 @@ export default function UserDashboard() {
   }
 
   const fetchAttendance = async () => {
-    showLoader()
     const id = user?.ID
     const endpoint = "/userAttendance/" + id + "/" + month + "/" + year
     const response = await getReq(endpoint)
     setAttd(response)
     setShowTable(true)
-    hideLoader()
   }
 
+
   async function punchIn() {
-    showLoader()
     const info = {
       userid: user?.ID,
     }
     const res = await postReq("/punchIn", info)
     toast.info(res)
-    hideLoader()
+    setIsLoading(false)
   }
+  function punchInHandler() {
+    setIsLoading(true)
+    punchIn()
+  }
+
   async function punchOut() {
-    showLoader()
     const info = {
       userid: user?.ID,
     }
     const res =await postReq("/punchOut", info)
     toast.info(res)
-    hideLoader()
+    setIsLoading(false)
+  }
+  function punchOutHandler() {
+    setIsLoading(true)
+    punchOut()
   }
 
   return (
     <div className="pl-60 pt-16">
+    {isLoading && <progress className="progress w-560"></progress>}
       <div className="bg-sky-50 h-full w-full py-4 px-4 flex items-center">
         <div className="w-1/10">
           <img
@@ -73,7 +79,7 @@ export default function UserDashboard() {
           <button
             className="border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
             type="button"
-            onClick={punchIn}
+            onClick={punchInHandler}
             disabled={isLoading}
           >
             Punch In
@@ -81,7 +87,7 @@ export default function UserDashboard() {
           <button
             className="ml-2 border font-medium text-white bg-indigo-500 px-8 py-2 rounded-full"
             type="button"
-            onClick={punchOut}
+            onClick={punchOutHandler}
             disabled={isLoading}
           >
             Punch Out

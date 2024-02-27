@@ -26,7 +26,6 @@ const AuthState = (props: { children: React.ReactNode }) => {
       setUser(data)
     } catch (error) {
       setUser(null)
-      console.error("Login Error:", error)
     }
   }
 
