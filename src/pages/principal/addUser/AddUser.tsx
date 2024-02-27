@@ -1,42 +1,40 @@
-import { useState } from "react";
-import Select from "react-select";
-import { classOptions, roleOptions } from "./constants";
-import { postReq } from "../../../services/api";
+import { useState } from "react"
+import Select from "react-select"
+import { classOptions, roleOptions } from "./constants"
+import { postReq } from "../../../services/api"
+import { OptionType, userClasses, userRoles } from "../../../SharedComponents/constants"
+import { OptionTypeStr } from "./constants"
 
 export default function AddUser() {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [userClass, setUserClass] = useState(0);
+  const [firstname, setFirstname] = useState<string>("")
+  const [lastname, setLastname] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [role, setRole] = useState<string>("")
+  const [userClass, setUserClass] = useState<number>()
 
-  const roleChangeHandler = (event) => {
-    setRole(event.value);
-  };
+  const roleChangeHandler = (selectedOption: OptionTypeStr | null) => {
+    if (selectedOption) setRole(selectedOption.value)
+  }
 
-  const classChangeHandler = (event) => {
-    setUserClass(event.value);
-  };
+  const classChangeHandler = (selectedOption: OptionType | null) => {
+    setUserClass(selectedOption?.value)
+  }
 
   const addUserHandler = async () => {
-    if (role === "teacher") {
-      setUserClass(0);
-    }
-
     const userInfo = {
       firstname: firstname,
       lastname: lastname,
       email: email,
       role: role,
-      class: userClass,
-    };
-    await postReq("/addUser", userInfo);
-  };
+      class: role == userRoles.teacher ? userClasses.zero : userClass,
+    }
+    await postReq("/addUser", userInfo)
+  }
 
   return (
     <div className="pl-60">
-      <div className="font-bold text-4xl pt-8 pl-8 ">Add User</div>
-      <form id="form" className="ml-8 pt-4 w-90" onSubmit={addUserHandler}>
+      <div className="font-bold text-4xl pt-20 pl-8 ">Add User</div>
+      <form id="form" className="ml-8 pt-6 w-90" onSubmit={addUserHandler}>
         <div>
           <label htmlFor="firstname" className="font-medium text-xl pr-4">
             First Name:
@@ -115,5 +113,5 @@ export default function AddUser() {
         </button>
       </form>
     </div>
-  );
+  )
 }

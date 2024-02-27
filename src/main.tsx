@@ -1,10 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import App from "./App"
+import AuthState from "./contexts/AuthState"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+      <AuthState>
+        <App />
+      </AuthState>
   </React.StrictMode>
-);
+)

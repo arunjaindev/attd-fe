@@ -1,41 +1,52 @@
-import { useState, useMemo } from "react";
-import AuthContext from "./AuthContext";
+import React, { useState, useMemo, createContext, useContext } from "react"
+import { CredType, User, AuthContextType} from "./types"
+import { URL } from "./constants"
 
-const AuthState = (props) => {
-  const [user, setUser] = useState({});
+export const AuthContext = createContext<AuthContextType | null>(null)
 
-  async function login(creds) {
+const AuthState = (props: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(
+    JSON.parse(localStorage.getItem("user") ?? '""')
+  )
+
+  async function login(creds: CredType) {
     try {
-      const response = await fetch("http://localhost:8000/api/login", {
+      const response = await fetch(URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(creds),
-      });
+        credentials: "include",
+      })
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        throw new Error("Login failed")
       }
 
-      const data = response.json();
-      setUser(data);
+      const data = await response.json()
+      localStorage.setItem("user", JSON.stringify(data))
+      setUser(data)
     } catch (error) {
-      console.log("Login error:", error);
-      setUser({});
+      setUser(null)
     }
   }
 
   function logout() {
-    setUser({});
+    localStorage.removeItem("user")
+    setUser(null)
   }
 
   // Wrap provider value in useMemo to avoid unnecessary re-renders
-  const value = useMemo(() => ({ user, login, logout }), [user]);
-
+  const value = useMemo(() => ({ user, login, logout }), [user])
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
-  );
-};
+  )
+}
 
-export default AuthState;
+export const useAuthContext = () => {
+  const value = useContext(AuthContext)
+  if (!value) {
+    throw new Error("Wrap with provider")
+  }
+  return value
+}
+
+export default AuthState
